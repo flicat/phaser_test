@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>加载缓存图像</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+
+        var render = function() {
+            game.debug.inputInfo(32, 32);
+        };
+
+        var create = function() {
+            // 获取所有缓存中的数据
+            var images = game.cache.getKeys(Phaser.Cache.IMAGE);
+
+            for(var i = 20; i--; ){
+                // 从数组中挑选随机数返回
+                var img = game.rnd.pick(images);
+                // 添加精灵图
+                var tempSprite = game.add.sprite(game.world.randomX, game.world.randomY, img);
+                // 开启事件
+                tempSprite.inputEnabled = true;
+                // 开启拖放功能（拖放锁定中心位置，选中对象移至图层顶部）
+                tempSprite.input.enableDrag(false, true);
+            }
+        };
+
+        var preload = function() {
+            game.load.image('atari1', 'assets/sprites/atari130xe.png');
+            game.load.image('atari2', 'assets/sprites/atari800xl.png');
+            game.load.image('atari4', 'assets/sprites/atari800.png');
+            game.load.image('sonic', 'assets/sprites/sonic_havok_sanity.png');
+            game.load.image('duck', 'assets/sprites/darkwing_crazy.png');
+            game.load.image('firstaid', 'assets/sprites/firstaid.png');
+            game.load.image('diamond', 'assets/sprites/diamond.png');
+            game.load.image('mushroom', 'assets/sprites/mushroom2.png');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {preload: preload, create: create, render: render});
+    })(Phaser)
+</script>
+</body>
+</html>

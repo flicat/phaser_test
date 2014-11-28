@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>text shadow</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var createText = function(y) {
+            var text = game.add.text(game.world.centerX, y, '125战鬼', {
+                font: 'bold 50px Arial Black',
+                fill: '#f0f',
+                align: 'center'
+            });
+            text.anchor.set(0.5);
+            return text;
+        };
+
+        var create = function() {
+            game.stage.backgroundColor = '#eee';
+
+            var text = createText(100);
+            // 设置文字阴影（x偏移量，y偏移量，投影颜色，模糊值）
+            text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 5);
+
+            text = createText(300);
+            // 设置文字阴影（x偏移量，y偏移量，投影颜色，模糊值）
+            text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 15);
+
+            text = createText(500);
+            // 设置文字阴影（x偏移量，y偏移量，投影颜色，模糊值）
+            text.setShadow(-5, 5, 'rgba(0,0,0,0.5)', 0);
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'my_canvas', {create: create});
+    })(Phaser)
+</script>
+</body>
+</html>

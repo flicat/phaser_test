@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>加载瓦片地图</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var map, layer;
+
+        var create = function() {
+            game.stage.backgroundColor = '#787878';
+            // 创建一个新的瓦片地图对象（key，地图宽度，地图高度，瓦片宽度，瓦片高度）
+            map = game.add.tilemap('mario');
+            // 添加到画布（瓦片地图名称，key，地图宽度，地图高度，瓦片左右距，瓦片上下距）
+            map.addTilesetImage('SuperMarioBros-World1-1', 'tiles');
+            // 创建一个新的瓦片地图层（图层索引值）
+            layer = map.createLayer('World1');
+            // 匹配大小
+            layer.resizeWorld();
+        };
+
+        var preload = function() {
+            // 添加一个瓦片地图对象（key，地图配置文件或json对象，地图数据格式）
+            game.load.tilemap('mario', 'assets/tilemaps/maps/super_mario.json', null, Phaser.Tilemap.TILED_JSON);
+            // 加载图片
+            game.load.image('tiles', 'assets/tilemaps/tiles/super_mario.png');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {preload: preload, create: create});
+    })(Phaser)
+</script>
+</body>
+</html>

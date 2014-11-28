@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>add an image</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var timer = 0, total = 0;
+
+        var create = function() {
+            var start, end, dir;
+            if(Math.round(Math.random()) === 1){
+                start = -(Math.random() * 800);
+                end = game.width + 1600;
+                dir = 1;
+            } else {
+                start = 800 + (Math.random() * 800);
+                end = -1600;
+                dir = -1;
+            }
+
+            // 添加一个图片对象（坐标x，坐标y，key）
+            var mummy = game.add.sprite(start, game.world.randomY, 'mummy');
+
+            // 缩放
+//            mummy.scale.setTo(2,2);
+
+            // 动画
+            mummy.animations.add('walk');
+            mummy.animations.play('walk', 30, true);
+
+            // 角度旋转
+//            mummy.angle = game.rnd.angle();
+
+            mummy.scale.x = dir;
+
+            // 逐帧动画（目标坐标，动画持续时间，运动方式，是否自动播放）
+            game.add.tween(mummy).to({x: end, y: Math.random() * 600}, 40000, Phaser.Easing.Linear.None, true);
+
+            total++;
+            timer = game.time.now + 100;
+        };
+
+        var update = function() {
+            if(total < 200 && game.time.now > timer){
+                create();
+            }
+        };
+
+        var preload = function() {
+            // 加载精灵图（key，url，帧宽度，帧高度，帧数）
+            game.load.spritesheet('mummy', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
+        };
+
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload, update: update});
+    })(Phaser)
+</script>
+</body>
+</html>

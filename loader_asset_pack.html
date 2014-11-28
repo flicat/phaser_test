@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>加载资源包</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var pic, music;
+
+        var render = function() {
+            game.debug.soundInfo(music, 370, 32);
+
+            if(music.isDecoding){
+                game.debug.text('decoding MP3 ...', 32, 200);
+            }
+        };
+
+        var create = function() {
+            // 设置背景颜色
+            game.stage.backgroundColor = '#182d3b';
+            // 添加图像
+            game.add.image(0, 0, 'starwars');
+            game.add.image(0, 300, 'spaceship');
+            game.add.image(700, 360, 'ilkke');
+
+            // 添加音乐
+            music = game.sound.play('boden');
+
+            // 添加动画
+            var mummy = game.add.sprite(370, 200, 'mummy');
+            mummy.animations.add('walk');
+            mummy.animations.play('walk', 20, true);
+
+        };
+
+        var preload = function() {
+            // 加载图片
+            game.load.image('ilkke', 'assets/sprites/ilkke.png');
+            // 加载资源包(key，url或资源包json对象)
+            game.load.pack('level1', '', {
+                "level1": [
+                    {
+                        "type": "image",
+                        "key": "starwars",
+                        "url": "assets/pics/unknown-the_starwars_pic.png",
+                        "overwrite": false
+                    },
+                    {
+                        "type": "image",
+                        "key": "spaceship",
+                        "url": "assets/pics/spaceship.png",
+                        "overwrite": false
+                    },
+                    {
+                        "type": "audio",
+                        "key": "boden",
+                        "urls": ["assets/audio/bodenstaendig_2000_in_rock_4bit.mp3", "assets/audio/bodenstaendig_2000_in_rock_4bit.ogg"],
+                        "autoDecode": true
+                    },
+                    {
+                        "type": "spritesheet",
+                        "key": "mummy",
+                        "url": "assets/sprites/metalslug_mummy37x45.png",
+                        "frameWidth": 37,
+                        "frameHeight": 45,
+                        "frameMax": 18,
+                        "margin": 0,
+                        "spacing": 0
+                    }
+                ],
+                "level2": [
+                    {
+                        "type": "image",
+                        "key": "ball",
+                        "url": "assets/sprites/shinyball.png",
+                        "overwrite": false
+                    }
+                ],
+                "meta": {
+                    "generated": "1401380327373",
+                    "app": "Phaser Asset Packer",
+                    "url": "http://phaser.io",
+                    "version": "1.0",
+                    "copyright": "Photon Storm Ltd. 2014"
+                }
+            });
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'my_canvas', {preload: preload, create: create, render: render});
+    })(Phaser)
+</script>
+</body>
+</html>

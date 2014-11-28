@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>字体投影</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var text;
+
+        var distanceToPointer = function(displayObject, pointer) {  // 文字对象，指针对象
+            this._dx = displayObject.x - pointer.x;
+            this._dy = displayObject.y - pointer.y;
+
+            return Math.sqrt(this._dx * this._dx + this._dy * this._dy);
+        };
+
+        var moveToXY = function(displayObject, x, y, speed) {         // 指针对象，文字x坐标，文字y坐标，偏移量
+            var _angle = Math.atan2(y - displayObject.y, x - displayObject.x);
+
+            return {
+                x: Math.cos(_angle) * speed,
+                y: Math.sin(_angle) * speed
+            }
+        };
+
+        var create = function() {
+            // 设置背景色
+            game.stage.setBackgroundColor(0xfbf6d5);
+            // 添加文字
+//            text = game.add.text(game.world.centerX, 250, '  dynamic shadows  ');
+            text = game.add.text(game.world.centerX, 250, '  dynamic shadows  ', {
+                align: 'center',
+                font: '900 70px/140px Arial Black',
+                fill: '#ec008c'
+            });
+
+            text.anchor.set(0.5);
+
+//            text.align = 'center';
+//            text.font = 'Arial Black';
+//            text.fontSize = 70;
+//            text.fontWeight = 'bold';
+//            text.fill = '#ec008c';
+
+            // 设置投影（x偏移量，y偏移量，阴影颜色，模糊值）
+            text.setShadow(0, 0, 'rgba(0, 0, 0, 0.5)', 0);
+        };
+
+        var update = function() {
+            var offset = moveToXY(game.input.activePointer, text.x, text.y, 8);
+            text.setShadow(offset.x, offset.y, 'rgba(0, 0, 0, 0.5)', distanceToPointer(text, game.input.activePointer) / 30)
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'my_canvas', {update: update, create: create});
+    })(Phaser)
+</script>
+</body>
+</html>

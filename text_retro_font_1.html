@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>retro font 1</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var font;
+
+        var update = function() {
+            font.text = "phaser x: " + game.input.x + " y: " + game.input.y;
+        };
+
+        var create = function() {
+            // 创建一个新的 retroFont 对象（key，字符宽度，字符高度，字体设置，每行的字符数量，行距，垂直间距）
+            font = game.add.retroFont('knightHawks', 31, 25, Phaser.RetroFont.TEXT_SET6, 10, 1, 1);
+
+            for(var i = 0; i < 19; i++){
+                var c = game.add.image(game.world.centerX, i * 32, font);
+                c.anchor.set(0.5, 0.5)
+            }
+        };
+
+        var preload = function() {
+            game.load.image('knightHawks', 'assets/fonts/retroFonts/KNIGHT3.png');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {preload: preload, create: create, update: update});
+    })(Phaser)
+</script>
+</body>
+</html>

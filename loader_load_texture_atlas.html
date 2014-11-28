@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>加载纹理集合</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var jellyfish;
+
+        var create = function() {
+            // 添加精灵图对象（x坐标，y坐标，key）
+            game.add.sprite(0, 0, 'undersea');
+            jellyfish = game.add.sprite(330, 100, 'seacreatures');
+            // 添加一个动画（动画名，帧序列，帧速率，是否循环）
+            jellyfish.animations.add('swim',
+                    // 根据图集对象生成帧序列（key，开始帧，结束帧，帧名称，帧速率）
+                    Phaser.Animation.generateFrameNames('octopus', 0, 24, '', 4),
+                    30, true);
+            jellyfish.animations.play('swim');
+
+            game.add.sprite(0, 466, 'coral');
+
+            // 添加逐帧动画（sprite对象）  设置终点（坐标对象，动画时间，运动方式，自动播放，延迟时间，动画持续时间，是否往返播放动画）
+            game.add.tween(jellyfish).to({y: 250}, 4000, Phaser.Easing.Quadratic.InOut, true, 0, 10000, true);
+        };
+
+        var preload = function() {
+            // 添加一个纹理集合（key，精灵图url，配置文件url）
+            game.load.atlas('seacreatures', 'assets/sprites/seacreatures_json.png', 'assets/sprites/seacreatures_json.json');
+            // 加载图片
+            game.load.image('undersea', 'assets/pics/undersea.jpg');
+            game.load.image('coral', 'assets/pics/seabed.png');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {preload: preload, create: create});
+    })(Phaser)
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+</head>
+<body>
+    <div id="my_canvas"></div>
+    <script type="text/javascript">
+        var preload = function() {
+            // 添加一个新的纹理地图集装载器 (动画key，纹理url， json配置文件或json对象)
+//            game.load.atlasJSONHash('bot', 'assets/sprites/running_bot.png', 'assets/sprites/running_bot.json');
+            game.load.atlasJSONHash('bot', 'assets/sprites/running_bot.png', '', {"frames": [
+                {
+                    "filename": "run00",
+                    "frame": {"x":34,"y":128,"w":56,"h":60},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":0,"y":2,"w":56,"h":60},
+                    "sourceSize": {"w":56,"h":64}
+                },
+                {
+                    "filename": "run01",
+                    "frame": {"x":54,"y":0,"w":56,"h":58},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":0,"y":3,"w":56,"h":58},
+                    "sourceSize": {"w":56,"h":64}
+                },
+                {
+                    "filename": "run02",
+                    "frame": {"x":54,"y":58,"w":56,"h":58},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":0,"y":3,"w":56,"h":58},
+                    "sourceSize": {"w":56,"h":64}
+                },
+                {
+                    "filename": "run03",
+                    "frame": {"x":0,"y":192,"w":34,"h":64},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":11,"y":0,"w":34,"h":64},
+                    "sourceSize": {"w":56,"h":64}
+                },
+                {
+                    "filename": "run04",
+                    "frame": {"x":0,"y":64,"w":54,"h":64},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":1,"y":0,"w":54,"h":64},
+                    "sourceSize": {"w":56,"h":64}
+                },
+                {
+                    "filename": "run05",
+                    "frame": {"x":196,"y":0,"w":56,"h":58},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":0,"y":3,"w":56,"h":58},
+                    "sourceSize": {"w":56,"h":64}
+                },
+                {
+                    "filename": "run06",
+                    "frame": {"x":0,"y":0,"w":54,"h":64},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":1,"y":0,"w":54,"h":64},
+                    "sourceSize": {"w":56,"h":64}
+                },
+                {
+                    "filename": "run07",
+                    "frame": {"x":140,"y":0,"w":56,"h":58},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":0,"y":3,"w":56,"h":58},
+                    "sourceSize": {"w":56,"h":64}
+                },
+                {
+                    "filename": "run08",
+                    "frame": {"x":34,"y":188,"w":50,"h":60},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":3,"y":2,"w":50,"h":60},
+                    "sourceSize": {"w":56,"h":64}
+                },
+                {
+                    "filename": "run09",
+                    "frame": {"x":0,"y":128,"w":34,"h":64},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":11,"y":0,"w":34,"h":64},
+                    "sourceSize": {"w":56,"h":64}
+                },
+                {
+                    "filename": "run10",
+                    "frame": {"x":84,"y":188,"w":56,"h":58},
+                    "rotated": false,
+                    "trimmed": true,
+                    "spriteSourceSize": {"x":0,"y":3,"w":56,"h":58},
+                    "sourceSize": {"w":56,"h":64}
+                }],
+                "meta": {
+                    "app": "http://www.texturepacker.com",
+                    "version": "1.0",
+                    "image": "running_bot.png",
+                    "format": "RGBA8888",
+                    "size": {"w":252,"h":256},
+                    "scale": "0.2",
+                    "smartupdate": "$TexturePacker:SmartUpdate:fb56f261b1eb04e3215824426595f64c$"
+                }
+            });
+        };
+
+        var create = function() {
+            // 将动画对象加载至画布（x坐标，y坐标，动画key）
+            var bot = game.add.sprite(200, 200, 'bot');
+
+            // 添加一个动画动作（动画名称）
+            bot.animations.add('run');
+
+            // 播放给定的动画(动作名，播放动画的帧速率，是否循环)
+            bot.animations.play('run', 15, true);
+        };
+
+        // 创建游戏对象 (画布宽度，画布高度，渲染器，画布父层id或DOM，状态对象：{预加载 preload 、创建 create、更新 update、渲染 render})
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {preload: preload, create: create});
+    </script>
+</body>
+</html>

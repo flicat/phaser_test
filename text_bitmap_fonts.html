@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>加载位图字体</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var create = function() {
+            // 创建位图字体对象（x坐标，y坐标，字体key，文字，字体大小）
+            var bpmText = game.add.bitmapText(10, 100, 'carrier_command','Drag me around !',34);
+            // 开启拖放
+            bpmText.inputEnabled = true;
+            bpmText.input.enableDrag();
+        };
+
+        var preload = function() {
+            // 加载位图字体（key，精灵图url，配置文件）
+            game.load.bitmapFont('carrier_command', 'assets/fonts/bitmapFonts/carrier_command.png', 'assets/fonts/bitmapFonts/carrier_command.xml');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {preload: preload, create: create});
+    })(Phaser)
+</script>
+</body>
+</html>

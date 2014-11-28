@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>text events</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var clicks = 0;
+
+        var over = function(item) {
+            item.fill = '#f0f';
+            item.text = '点击了' + clicks + '次!';
+        };
+        var out = function(item) {
+            item.fill = '#f04';
+            item.text = '点击和拖放！';
+        };
+        var down = function(item) {
+            clicks++;
+            item.text = '点击了' + clicks + '次!';
+        };
+        var up = function(item) {
+            item.text = '谢谢点击！';
+        };
+
+        var create = function() {
+            var text = game.add.text(game.world.centerX, game.world.centerY, "点击和拖放！", { font: "65px Arial", fill: "#f04", align: "center" });
+            text.anchor.set(0.5);
+
+            text.inputEnabled = true;
+            text.input.enableDrag();
+            // 绑定事件
+            text.events.onInputOver.add(over, this);
+            text.events.onInputOut.add(out, this);
+            text.events.onInputDown.add(down, this);
+            text.events.onInputUp.add(up, this);
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'my_canvas', {create: create});
+    })(Phaser)
+</script>
+</body>
+</html>

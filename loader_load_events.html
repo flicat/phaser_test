@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>加载事件</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var text;
+        var button;
+        var x = 32;
+        var y = 80;
+
+        // 文件开始加载事件回调  (文件总数)
+        var loadStart = function(total) {  //
+            text.setText("Loading ...");
+        };
+
+        // 单个文件完成加载回调  (加载进度，文件key，是否成功，已加载数，加载总数)
+        var fileComplete = function(progress, cacheKey, success, totalLoaded, totalFiles) {
+            text.setText("File Complete: " + progress + "% - " + totalLoaded + " out of " + totalFiles);
+
+            var newImage = game.add.image(x, y, cacheKey);
+            newImage.scale.set(0.3);
+
+            x += newImage.width + 20;
+
+            if(x > 700){
+                x = 32;
+                y += 332;
+            }
+        };
+
+        // 所有文件完成加载回调
+        var loadComplete = function() {
+            text.setText("Load Complete");
+        };
+
+        // 按钮点击事件回调 （context，点击坐标）
+        var start = function() {
+            // 加载图片
+            game.load.image('picture1', 'assets/pics/mighty_no_09_cover_art_by_robduenas.jpg');
+            game.load.image('picture2', 'assets/pics/cougar_dragonsun.png');
+            game.load.image('picture3', 'assets/pics/trsipic1_lazur.jpg');
+            game.load.image('picture4', 'assets/pics/archmage_in_your_face.png');
+            game.load.image('picture5', 'assets/pics/acryl_bladerunner.png');
+            game.load.image('picture6', 'assets/pics/acryl_bobablast.png');
+            game.load.image('picture7', 'assets/pics/alex-bisleys_horsy_5.png');
+
+            // 开始加载资源
+            game.load.start();
+
+            // 隐藏按钮
+            button.visible = false;
+        };
+
+        var create = function() {
+            // 设置背景色
+            game.stage.backgroundColor = '#182d3b';
+            // 文件开始加载事件
+            game.load.onLoadStart.add(loadStart, this);
+            // 文件完成加载
+            game.load.onFileComplete.add(fileComplete, this);
+            // 所有文件加载完毕
+            game.load.onLoadComplete.add(loadComplete, this);
+            // 创建一个新的按钮对象（x坐标，y坐标，key，按钮点击事件函数，context，鼠标经过状态帧，鼠标离开状态帧，鼠标点击状态帧）
+            button = game.add.button(game.world.centerX - 95, 400, 'button', start, this, 2, 1, 0);
+            // 添加文字对象（x坐标，y坐标，文字，样式）
+            text = game.add.text(32, 32, 'Click to start load', {fill: '#ffffff'});
+        };
+
+        var preload = function() {
+            // 添加一个精灵图对象（key，url，单个帧宽度，单个帧高度）
+            game.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 193, 71);
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {preload: preload, create: create});
+    })(Phaser)
+</script>
+</body>
+</html>

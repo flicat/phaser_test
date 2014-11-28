@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>加载音频</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var music;
+
+        var render = function() {
+            game.debug.soundInfo(music, 32, 32);
+
+            if(music.isDecoding){
+                game.debug.text('正在解码中 ...', 32, 200);
+            }
+        };
+
+        var create = function() {
+            // 设置背景颜色
+            game.stage.backgroundColor = '#182d3b';
+
+            // 添加音乐
+            music = game.sound.play('boden');
+        };
+
+        var preload = function() {
+            game.load.audio('boden', ['assets/audio/bodenstaendig_2000_in_rock_4bit.mp3', 'assets/audio/bodenstaendig_2000_in_rock_4bit.ogg']);
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'my_canvas', {preload: preload, create: create, render: render});
+    })(Phaser)
+</script>
+</body>
+</html>

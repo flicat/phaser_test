@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+</head>
+<body>
+<div id="my_canvas"></div>
+<script type="text/javascript">
+    // 预加载回调
+    var preload = function() {
+        // 预加载一张图片 (图片key，图片url)
+        game.load.image('image', 'assets/pics/ra_einstein.png');
+    };
+
+    // 游戏创建回调函数
+    var create = function() {
+        // 将图片加载至画布（x坐标，y坐标，图片key）
+        var image = game.add.sprite(-400, 0, 'image');
+
+        // 创建一个过渡对象（sprite对象）
+        var tween = game.add.tween(image);
+        // 设置终点
+        tween.to({x: 600, y: 400}, 6000);
+        // 开始移动
+        tween.start();
+    };
+
+    // 创建游戏对象 (画布宽度，画布高度，渲染器，画布父层id或DOM，状态对象：{预加载 preload 、创建 create、更新 update、渲染 render})
+    var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {preload: preload, create: create});
+</script>
+</body>
+</html>

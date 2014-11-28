@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>加载自定义字体</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var text;
+
+        var update = function() {
+            text.setText('Bitmap Fonts!\nx: ' + Math.round(game.input.x) + ' y: ' + Math.round(game.input.y));
+        };
+
+        var create = function() {
+            // 设置背景颜色
+            game.stage.backgroundColor = '#0072bc';
+
+            // 添加文字(x坐标，y坐标，key，文本，字体大小)
+            text = game.add.bitmapText(200, 100, 'desyrel', 'Bitmap Fonts!', 64);
+        };
+
+        var preload = function() {
+            // 添加一个新的位图字体加载请求(key，字体图片地址，字体配置文件地址)
+            game.load.bitmapFont('desyrel', 'assets/fonts/bitmapFonts/desyrel.png', 'assets/fonts/bitmapFonts/desyrel.xml');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {preload: preload, create: create, update: update});
+    })(Phaser)
+</script>
+</body>
+</html>

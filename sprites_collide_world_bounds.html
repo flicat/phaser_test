@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>collide world bounds</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var create = function() {
+            var pineapples = game.add.group();
+            // 开启物理对象
+            pineapples.enableBody = true;
+            // 设置物理对象为  ARCADE
+            pineapples.physicsBodyType = Phaser.Physics.ARCADE;
+
+            for(var i = 0; i < 10; i++){
+                // 创建一个新的精灵图对象（x坐标，y坐标，资源key）
+                var pineapple = pineapples.create(200 + i * 48, 50, 'pineapple');
+                // 设置碰撞墙壁
+                pineapple.body.collideWorldBounds = true;
+                // 重力设置
+                pineapple.body.gravity.x = game.rnd.integerInRange(-50, 50);
+                pineapple.body.gravity.y = 100 + Math.random() * 100;
+                // 碰撞反弹
+                pineapple.body.bounce.setTo(0.9, 0.9);
+            }
+        };
+
+        var preload = function() {
+            game.load.image('pineapple', 'assets/sprites/pineapple.png');
+        };
+
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload});
+    })(Phaser)
+</script>
+</body>
+</html>

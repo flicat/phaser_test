@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>检测缓存</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var create = function() {
+            var image = game.cache.checkImageKey('image');          // 检测图像缓存
+            var text = game.cache.checkTextKey('text');             // 检测文字缓存
+            var tilemap = game.cache.checkTilemapKey('tilemap');    // 检测拼接图缓存
+            var audio = game.cache.checkSoundKey('audio');          // 检测音频缓存
+
+            var broken = game.cache.checkImageKey('broken');        // 失败的案例
+
+            game.add.text(40, 40, 'check image key: ' + image, {fill: '#fff'});
+            game.add.text(40, 80, 'check text key: ' + text, {fill: '#fff'});
+            game.add.text(40, 120, 'check tilemap key: ' + tilemap, {fill: '#fff'});
+            game.add.text(40, 160, 'check audio key: ' + audio, {fill: '#fff'});
+            game.add.text(40, 200, 'check broken image key: ' + broken, {fill: '#fff'});
+        };
+
+        var preload = function() {
+            // 加载图像
+            game.load.image('image', 'assets/sprites/phaser2.png');
+            // 加载文字
+            game.load.text('text', 'http://phaser.io');
+            // 加载拼接图
+            game.load.tilemap('mario', 'assets/tilemaps/maps/super_mario.json', null, Phaser.Tilemap.TILED_JSON);
+            // 加载声音
+            game.load.audio('audio', [ 'assets/audio/SoundEffects/squit.mp3', 'assets/audio/SoundEffects/squit.ogg' ]);
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'my_canvas', {preload: preload, create: create});
+    })(Phaser)
+</script>
+</body>
+</html>

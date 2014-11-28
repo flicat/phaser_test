@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>text gradient</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var create = function() {
+            var text = game.add.text(game.world.centerX, game.world.centerY, "- PHASER -", {
+                font: "bold 70px Arial",
+                fill: '#fff',
+                align: "center"
+            });
+
+            text.anchor.set(0.5);
+
+            // 创建倒影文字
+            var textReflect  = game.add.text(game.world.centerX, game.world.centerY + 50, "- PHASER -", {
+                font: "bold 70px Arial",
+                align: "center"
+            });
+
+            textReflect.anchor.set(0.5);
+            textReflect.scale.y = -1;
+
+            var grn = textReflect.context.createLinearGradient(0, 0, 0, text.canvas.height);
+            grn.addColorStop(0, 'rgba(255, 255, 255, 0)');
+            grn.addColorStop(1, 'rgba(255, 255, 255, 0.08)');
+
+            textReflect.fill = grn;
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'my_canvas', {create: create});
+    })(Phaser)
+</script>
+</body>
+</html>

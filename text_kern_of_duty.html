@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>打印文字效果</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var text;
+        var index = 0;
+        var line = '';
+        var content = [
+            " ",
+            "photon storm presents",
+            "a phaser production",
+            " ",
+            "Kern of Duty",
+            " ",
+            "directed by rich davey",
+            "rendering by mat groves",
+            "    ",
+            "03:45, November 4th, 2014",
+            "somewhere in the north pacific",
+            "mission control bravo ..."
+        ];
+
+        var updateLine = function() {
+            if(line.length < content[index].length){
+                line = content[index].substr(0, line.length + 1);
+                // text.text = line;
+                text.setText(line);
+            } else {
+                // 延迟2秒后加载下一行文字
+                game.time.events.add(Phaser.Timer.SECOND * 2, nextLine, this);
+            }
+        };
+
+        var nextLine = function() {
+            index++;
+
+            if(index < content.length) {
+                line = '';
+                // 添加一个迭代对象（迭代延迟，迭代次数，回调函数，context）
+                game.time.events.repeat(80, content[index].length + 1, updateLine, this);
+            }
+        };
+
+        var create = function() {
+            game.add.sprite(0, 0, 'cod');
+            text = game.add.text(32, 380, '', {
+                font: "30pt Courier",
+                fill: "#19cb65",
+                stroke: "#119f4e",
+                strokeThickness: 2
+            });
+
+            nextLine();
+        };
+
+        var preload = function() {
+            game.load.image('cod', 'assets/pics/cod.jpg');
+        };
+
+        var game = new Phaser.Game(800, 480, Phaser.AUTO, 'my_canvas', {preload: preload, create: create});
+    })(Phaser)
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>anchor</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var sprite;
+        var point;
+        var dec = false;
+
+        // 设置精灵图的偏移量（%）
+        var updateAnchor = function() {
+            if(dec){
+                sprite.anchor.x -= 0.1;
+                sprite.anchor.y -= 0.1;
+
+                if(sprite.anchor.x.toFixed(1) <= 0){
+                    dec = false;
+                }
+            } else {
+                sprite.anchor.x += 0.1;
+                sprite.anchor.y += 0.1;
+
+                if(sprite.anchor.x.toFixed(1) >= 1){
+                    dec = true;
+                }
+            }
+        };
+
+        var render = function() {
+            game.debug.geom(point, 'rgb(0,255,0)');
+
+            game.debug.text('Anchor X: ' + sprite.anchor.x.toFixed(1) + ' Y: ' + sprite.anchor.y.toFixed(1), 32, 32);
+            game.debug.text('Sprite X: ' + sprite.x + ' Y: ' + sprite.y, 32, 64);
+            game.debug.text('Click to adjust the anchor', 32, 96);
+        };
+
+        var create = function() {
+            game.stage.backgroundColor = '#0072bc';
+
+            point = new Phaser.Point(400, 300);
+            sprite = game.add.sprite(point.x, point.y, 'pic');
+            sprite.anchor.set(0);
+
+            game.input.onDown.add(updateAnchor, this);
+        };
+
+        var update = function() {
+
+        };
+
+        var preload = function() {
+            game.load.image('pic', 'assets/pics/lance-overdose-loader_eye.png');
+        };
+
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload, update: update, render: render});
+    })(Phaser)
+</script>
+</body>
+</html>
