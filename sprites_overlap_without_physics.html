@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>sprites overlap without physics</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var atari1, atari2, text;
+
+        var checkOverlap = function(a, b) {
+            // 确定两个矩形对象是否重叠
+            return Phaser.Rectangle.intersects(a.getBounds(), b.getBounds())
+        };
+
+        var update = function() {
+            if(checkOverlap(atari1, atari2)){
+                text.text = 'Drag the sprite. Overlapping: true';
+            } else {
+                text.text = 'Drag the sprite. Overlapping: false';
+            }
+        };
+
+        var create = function() {
+            atari1 = game.add.sprite(100, 200, 'atari1');
+            atari1.inputEnabled = true;                     // 开启事件
+            atari1.input.enableDrag();                      // 开启拖放
+
+            atari2 = game.add.sprite(400, 100, 'atari2');
+            atari2.inputEnabled = true;                     // 开启事件
+            atari2.input.enableDrag();                      // 开启拖放
+
+            text = game.add.text(16, 16, 'Drag the sprite. Overlapping: false', { fill: '#ffffff' });
+        };
+
+        var preload = function() {
+            // 加载图片资源（key，url）
+            game.load.image('atari1', 'assets/sprites/atari130xe.png');
+            game.load.image('atari2', 'assets/sprites/atari800xl.png');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'my_canvas', {create: create, preload: preload, update: update});
+    })(Phaser)
+</script>
+</body>
+</html>

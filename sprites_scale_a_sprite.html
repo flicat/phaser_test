@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>vertical crop</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var create = function() {
+            for(var i = 0; i < 10; i++){
+                var sprite = game.add.sprite(game.world.randomX, game.world.randomY, 'disk');
+                // 返回随机数（min，max）
+                var rang = game.rnd.realInRange(-2, 4);
+                sprite.scale.set(rang, rang);
+            }
+        };
+
+        var preload = function() {
+            // 加载图片资源（key，url）
+            game.load.image('disk', 'assets/sprites/darkwing_crazy.png');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload});
+    })(Phaser)
+</script>
+</body>
+</html>
