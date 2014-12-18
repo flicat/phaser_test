@@ -17,6 +17,7 @@
             color: #99f;
         }
         .wrap {
+            list-style: none;
             border: 1px solid #999;
             border-radius: 10px;
             width: 80%;
@@ -25,14 +26,14 @@
             display: flex;
             flex-wrap: wrap;
         }
-        .wrap a {
+        .wrap li {
             width: 300px;
             display: block;
         }
     </style>
 </head>
 <body>
-<div class="wrap">
+<ul class="wrap">
      <?php
       
      function u_g($path){
@@ -64,7 +65,7 @@
                  }else{
                      if($file !=="Thumbs.db" && $file !=="index.php"){
 //                         echo "file: ".g_u($nextDeck)."<br/>";
-                        echo "<a href='".$file."'>".$file."</a><br/>";
+                        echo "<li><a href='".$file."'>".$file."</a></li>";
                      }
                  }
              }
@@ -76,6 +77,6 @@
      my_scandir( $_SERVER['DOCUMENT_ROOT']."./");
      
      ?>
-     </div>
+     </ul>
 </body>
 </html>
