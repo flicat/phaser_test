@@ -1,3 +1,4 @@
 .idea/
 assets/
 _site/
+*.bat
