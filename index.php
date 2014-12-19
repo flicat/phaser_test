@@ -65,7 +65,7 @@
 //                     scanIt($nextDeck);
 //                     echo "dir: ".g_u($nextDeck)."<br/>";
                  }else{
-                     if($file !=="Thumbs.db" && $file !=="index.php"){
+                     if(preg_match("/\.(htm|html)$/", $file)){
 //                         echo "file: ".g_u($nextDeck)."<br/>";
                         echo "<li><a href='".$file."'>".$file."</a></li>";
                      }
