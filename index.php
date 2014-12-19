@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>test phaser</title>
     <style>
         body {
-            padding: 0;
+            padding: 10px;
             margin: 0;
             font: 400 14px/22px "微软雅黑"
         }
@@ -20,7 +20,7 @@
             list-style: none;
             border: 1px solid #999;
             border-radius: 10px;
-            width: 80%;
+            width: 95%;
             padding: 20px;
             margin: 50px auto;
             display: flex;
@@ -33,6 +33,8 @@
     </style>
 </head>
 <body>
+<h1>phaser demo</h1>
+<hr/>
 <ul class="wrap">
      <?php
       
