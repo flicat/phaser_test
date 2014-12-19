@@ -1,0 +1,27 @@
+﻿1      basics          基本知识    done
+2      loader          装载器      done
+3      text            文本        done
+4      sprites         精灵图      done
+5      tile sprites    瓦片精灵图
+6      tweens          补间动画
+7      animation       动画
+8      groups          动画组
+9      buttons         按钮
+10     input           事件
+11     audio           音频
+12     debug           调试
+13     time            时间
+14     camera          场景
+15     geometry        几何图形
+16     display         显示
+17     bitmapdata      位图数据
+18     ninja physics   忍者物理
+19     p2 physics      P2物理
+20     arcade physics  街机物理
+21     filters         过滤器
+22     particles       颗粒
+23     tilemaps        瓦片地图
+24     world           世界
+25     misc            杂项
+26     demoscene       演示场景
+27     games           游戏
