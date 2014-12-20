@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>vertical crop</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var s;
+
+        var render = function() {
+            game.debug.spriteInfo(s, 32, 32);
+        };
+
+        var update = function() {
+            if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
+                s.x -= 4;
+            } else if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+                s.x += 4;
+            } else if(game.input.keyboard.isDown(Phaser.Keyboard.UP)){
+                s.y -= 4;
+            } else if(game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
+                s.y += 4;
+            }
+        };
+
+        var create = function() {
+            s = game.add.sprite(game.world.centerX, game.world.centerY, 'bot');
+            s.anchor.set(0.5);
+            s.scale.set(2);
+            s.animations.add('run');
+            s.animations.play('run', 15, true);
+        };
+
+        var preload = function() {
+            // 添加一个新的纹理地图集装载器 (动画key，纹理url， json配置文件或json对象)
+            game.load.atlasJSONHash('bot', 'assets/sprites/running_bot.png', 'assets/sprites/running_bot.json');
+            // 添加一个精灵图对象（key，url，单个帧宽度，单个帧高度，图片总帧数）
+//            game.load.spritesheet('bot', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload, update: update, render: render});
+    })(Phaser)
+</script>
+</body>
+</html>

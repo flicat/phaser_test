@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>mask</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var sprite;
+        var mask;
+
+        var move = function(pointer, x, y) {
+            mask.x = x - 100;
+            mask.y = y - 100;
+        };
+
+        var create = function() {
+            // 添加精灵图（坐标x，坐标y，key）
+            sprite = game.add.sprite(0, 0, 'chaos');
+            // 缩放
+            sprite.scale.set(2);
+
+            // 创建一个新的图形对象（坐标x，坐标y）
+            mask = game.add.graphics(0, 0);
+
+            mask.beginFill(0xffffff);
+            mask.drawCircle(100, 100, 100);
+
+            // 将图形作为遮罩
+            sprite.mask = mask;
+            // 添加鼠标移动事件
+            game.input.addMoveCallback(move, this);
+        };
+
+        var preload = function() {
+            // 加载图片资源（key，url）
+            game.load.image('chaos', 'assets/pics/hotshot-chaos_in_tokyo.png');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload});
+    })(Phaser)
+</script>
+</body>
+</html>

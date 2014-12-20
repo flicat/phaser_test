@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>sprites sprite from bitmapdata</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var create = function() {
+            // 创建一个传统的画布对象（width，height）
+            var bmd = game.add.bitmapData(128, 128);
+            bmd.ctx.beginPath();
+            bmd.ctx.rect(0, 0, 128, 128);
+            bmd.ctx.fillStyle = '#f0f';
+            bmd.ctx.fill();
+
+            game.add.sprite(200, 200, bmd);
+
+        };
+
+        var preload = function() {
+
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload});
+    })(Phaser)
+</script>
+</body>
+</html>

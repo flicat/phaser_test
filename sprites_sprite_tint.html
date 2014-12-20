@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>sprite tint</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var sprite;
+
+        var changeTint = function() {
+            sprite.tint = Math.random() * 0xffffff;
+        };
+
+        var changeFrame = function() {
+            sprite.animations.next();
+        };
+
+        var update = function() {
+//            sprite.rotation += 0.02;
+        };
+
+        var create = function() {
+            // 添加一个精灵图对象（坐标x，坐标y， key，单独的帧）
+            sprite = game.add.sprite(game.world.centerX, game.world.centerY, 'atlas', 'greenJellyfish0000');
+            sprite.anchor.set(0.5);
+            // 创建动画（动画名，帧序列，帧速率，循环）     获取帧序列（帧名字，开始帧，结束帧，帧名后缀，帧间隔）
+            sprite.animations.add('swim', Phaser.Animation.generateFrameNames('greenJellyfish', 0, 38, '', 4), 30, true);
+            //
+            sprite.tint = Math.random() * 0xffffff;
+
+//            game.input.onDown.add(changeFrame, this);
+            game.input.onDown.add(changeTint, this);
+        };
+
+        var preload = function() {
+            game.load.atlas('atlas', 'assets/sprites/seacreatures_json.png', 'assets/sprites/seacreatures_json.json');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'my_canvas', {create: create, preload: preload, update: update});
+    })(Phaser)
+</script>
+</body>
+</html>

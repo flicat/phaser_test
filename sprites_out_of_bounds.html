@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>vertical crop</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var player;
+        var aliens;
+
+        var alienOut = function(alien) {
+            // 精灵图离开边界后重置至顶部
+            alien.reset(alien.x, -32);
+            // 设置移动速度
+            alien.body.velocity.y = 50 + Math.random() * 200;
+        };
+
+        var create = function() {
+            // 设置游戏边界
+            game.physics.setBoundsToWorld();
+            // 添加精灵图
+            player = game.add.sprite(400, 500, 'ship');
+            player.anchor.setTo(0.5, 0.5);
+
+            aliens = game.add.group();
+            // 设置物理对象
+            aliens.enableBody = true;
+            aliens.physicsBodyType = Phaser.Physics.ARCADE;
+
+            for(var y = 0; y < 4; y++) {
+                for(var x = 0; x < 10; x++) {
+                    var alien = aliens.create(200 + x * 48, y * 50, 'alien');
+                    alien.name = 'alien' + x.toString() + y.toString();
+                    // 开启检测边界
+                    alien.checkWorldBounds = true;
+                    // 绑定离开边界事件
+                    alien.events.onOutOfBounds.add(alienOut, this);
+                    // 设置移动速度
+                    alien.body.velocity.y = 50 + Math.random() * 200;
+                }
+            }
+        };
+
+        var preload = function() {
+            game.load.image('alien', 'assets/sprites/space-baddie.png');
+            game.load.image('ship', 'assets/sprites/shmup-ship.png');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload});
+    })(Phaser)
+</script>
+</body>
+</html>

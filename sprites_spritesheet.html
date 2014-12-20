@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>spritesheet</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var sprite;
+
+        var update = function() {
+            if(sprite.x >= 300){
+                sprite.scale.x += 0.01;
+                sprite.scale.y += 0.01;
+            }
+        };
+
+        var create = function() {
+            sprite = game.add.sprite(40, 100, 'mummy');
+            // 添加动画
+            sprite.animations.add('walk');
+            // 播放动画（动画名，帧速率，循环）
+            sprite.animations.play('walk', 50, true);
+
+            game.add.tween(sprite).to({x: game.width}, 10000, Phaser.Easing.Linear.None, true);
+        };
+
+        var preload = function() {
+            // 读取一个精灵图对象（key，图片url，帧宽度，帧高度，帧数）
+            game.load.spritesheet('mummy', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18)
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload, update: update});
+    })(Phaser)
+</script>
+</body>
+</html>

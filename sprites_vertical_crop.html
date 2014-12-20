@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>vertical crop</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        var pic;
+        var cropRect;
+
+        var update = function() {
+            // 更新裁切区域
+            pic.updateCrop();
+        };
+
+        var create = function() {
+            pic = game.add.image(game.world.centerX, 550, 'trsi');
+            pic.anchor.setTo(0.5, 1);
+
+            // 新建一个四边形对象
+            cropRect = new Phaser.Rectangle(0, 0, pic.width, 0);
+
+            // 添加逐帧动画（四边形对象）        设置动画（过度属性，动画时间，运动路径，自动开始，延时，循环，往返播放）
+            var tween = game.add.tween(cropRect).to({height: pic.height}, 3000, Phaser.Easing.Bounce.Out, false, 0, 1000, true);
+
+            // 应用裁切
+            pic.crop(cropRect);
+
+            tween.start();
+        };
+
+        var preload = function() {
+            // 加载图片资源（key，url）
+            game.load.image('trsi', 'assets/pics/trsipic1_lazur.jpg');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload, update: update});
+    })(Phaser)
+</script>
+</body>
+</html>

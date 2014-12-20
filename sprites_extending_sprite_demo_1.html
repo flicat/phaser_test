@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=800">
+    <style type="text/css">
+        * { margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript" src="_site/js/phaser.js"></script>
+    <title>extending sprite demo 1</title>
+</head>
+<body>
+<div id="my_canvas" class="my_canvas"></div>
+<script type="text/javascript">
+    (function(Phaser){
+        // 自定义sprite对象
+        var MonsterBunny = function(game, x, y, speed) {
+            Phaser.Sprite.call(this, game, x, y, 'bunny');
+            this.rotateSpeed = speed;
+        };
+        MonsterBunny.prototype = Object.create(Phaser.Sprite.prototype);
+        MonsterBunny.prototype.constructor = MonsterBunny;
+        MonsterBunny.prototype.update = function() {
+            this.angle += this.rotateSpeed;
+        };
+
+        var create = function() {
+            var wabbit = new MonsterBunny(game, 200, 300, 1);
+            var wabbit2 = new MonsterBunny(game, 600, 300, 0.5);
+
+            wabbit.anchor.setTo(0.5, 0.5);
+            wabbit2.anchor.setTo(0.5, 0.5);
+
+            // 添加一个对象到游戏
+            game.add.existing(wabbit);
+            game.add.existing(wabbit2);
+        };
+
+        var preload = function() {
+            // 加载图片资源（key，url）
+            game.load.image('bunny', 'assets/sprites/bunny.png');
+        };
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'my_canvas', {create: create, preload: preload});
+    })(Phaser)
+</script>
+</body>
+</html>
